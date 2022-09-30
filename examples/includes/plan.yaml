@@ -1,0 +1,5 @@
+name: plan
+config:
+  replication: 2
+suites:
+  - include:suite.yaml

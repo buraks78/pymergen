@@ -1,0 +1,88 @@
+version: "1.0"
+plans:
+  - name: plan1
+    config:
+      replication: 2
+      params:
+        key_a: value_a
+      iters:
+        iter_a:
+          - a
+          - A
+    pre:
+      - name: "plan1_pre1"
+        cmd: "echo '{m:entity:plan}'"
+    post:
+      - name: "plan1_post1"
+        cmd: "echo '{m:entity:plan}'"
+    suites:
+      - name: suite1
+        config:
+          replication: 2
+          concurrency: false
+          params:
+            key_b: value_b
+          iters:
+            iter_b:
+              - b
+              - B
+        pre:
+          - name: "suite1_pre1"
+            cmd: "echo '{m:entity:suite}'"
+        post:
+          - name: "suite1_post1"
+            cmd: "echo '{m:entity:suite}'"
+        cases:
+          - name: case1
+            config:
+              replication: 2
+              parallelism: 1
+              params:
+                key_c: value_c
+            pre:
+              - name: "case1_pre1"
+                cmd: "echo '{m:entity:case} {m:param:key_a} {m:param:key_b} {m:param:key_c}'"
+            post:
+              - name: "case1_post1"
+                cmd: "echo '{m:entity:case} {m:param:key_a} {m:param:key_b} {m:param:key_c}'"
+            commands:
+              - name: "case1_cmd1"
+                cmd: "echo '{m:entity:case} {m:param:key_a} {m:param:key_b} {m:param:key_c}' {1..9} > {m:context:run_path}/test1.out"
+                shell: true
+          - name: case2
+            config:
+              replication: 2
+              parallelism: 1
+              params:
+                key_d: value_d
+            pre:
+              - name: "case2_pre1"
+                cmd: "echo '{m:entity:case} {m:param:key_d}'"
+            post:
+              - name: "case2_post1"
+                cmd: "echo '{m:entity:case} {m:param:key_d}'"
+            commands:
+              - name: "case2_cmd1"
+                cmd: "echo '{m:entity:case} {m:param:key_d}'"
+                shell: false
+                debug_stdout: false
+                pipe_stdout: "{m:context:run_path}/test2.stdout.out"
+              - name: "case2_cmd2"
+                cmd: "echo 'foo' 1>&2"
+                shell: true
+                debug_stderr: true
+          - name: case3
+            config:
+              replication: 2
+              parallelism: 1
+              params:
+                key_d: value_d
+              iters:
+                iter_c:
+                  - c
+                  - C
+            commands:
+              - name: "case3_cmd1"
+                cmd: "echo 'iteration {m:iter:iter_a} {m:iter:iter_b} {m:iter:iter_c}'"
+                pipe_stdout: "{m:context:run_path}/test3.stdout_{m:iter:iter_a}{m:iter:iter_b}{m:iter:iter_c}.out"
+                pipe_stderr: "{m:context:run_path}/test3.stderr_{m:iter:iter_a}{m:iter:iter_b}{m:iter:iter_c}.out"

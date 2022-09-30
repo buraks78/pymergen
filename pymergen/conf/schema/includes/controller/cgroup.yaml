@@ -1,0 +1,39 @@
+type: dict
+schema:
+  name:
+    type: string
+    required: true
+    empty: false
+  become_cmd:
+    type: string
+    empty: false
+  controllers:
+    type: list
+    required: true
+    empty: false
+    schema:
+      type: dict
+      empty: false
+      schema:
+        name:
+          type: string
+          required: true
+          empty: false
+        limits:
+          type: list
+          empty: false
+          schema:
+            type: dict
+            empty: false
+            schema:
+              key:
+                type: string
+                required: true
+                empty: false
+              value:
+                oneof:
+                  - type: string
+                    required: true
+                    empty: false
+                  - type: integer
+                    required: true

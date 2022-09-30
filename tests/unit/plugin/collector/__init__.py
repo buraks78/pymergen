@@ -1,0 +1,1 @@
+# Plugin collector tests package

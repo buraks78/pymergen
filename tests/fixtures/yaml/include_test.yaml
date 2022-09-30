@@ -1,0 +1,11 @@
+version: "1.0"
+plans:
+  - name: include_test_plan
+    config:
+      replication: 1
+    suites:
+      - name: include_test_suite
+        cases:
+          - name: include_test_case
+            commands:
+              - include:command_includes.yaml

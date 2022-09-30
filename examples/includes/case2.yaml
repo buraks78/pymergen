@@ -1,0 +1,7 @@
+name: case2
+config:
+  replication: 2
+  parallelism: 1
+commands:
+  - name: "case2_cmd"
+    cmd: "echo '{m:entity:case}'"

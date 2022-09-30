@@ -1,0 +1,39 @@
+type: dict
+empty: false
+schema:
+  name:
+    type: string
+    required: true
+    empty: false
+  engine:
+    type: string
+    required: true
+    empty: false
+    allowed:
+      - perf_profile
+  become_cmd:
+    type: string
+    empty: false
+  ramp:
+    type: integer
+    required: true
+    empty: false
+  custom:
+    type: list
+    empty: false
+    schema:
+      type: string
+      empty: false
+  events:
+    type: list
+    empty: false
+    schema:
+      type: dict
+      empty: false
+      schema:
+        name:
+          type: string
+          required: true
+        cgroup:
+          type: string
+          empty: false

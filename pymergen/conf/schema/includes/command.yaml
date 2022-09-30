@@ -1,0 +1,51 @@
+type: dict
+empty: false
+schema:
+  name:
+    type: string
+    required: true
+    empty: false
+  cmd:
+    type: string
+    required: true
+    empty: false
+  become_cmd:
+    type: string
+    empty: false
+  raise_error:
+    type: boolean
+    empty: false
+    default: true
+  run_time:
+    type: integer
+    empty: false
+  shell:
+    type: boolean
+    empty: false
+  shell_executable:
+    type: string
+    empty: false
+  timeout:
+    type: integer
+    empty: false
+  pipe_stdout:
+    type: string
+    empty: false
+  pipe_stderr:
+    type: string
+    empty: false
+  debug_stdout:
+    type: boolean
+    empty: false
+    default: false
+  debug_stderr:
+    type: boolean
+    empty: false
+    default: false
+  cgroups:
+    type: list
+    required: false
+    empty: false
+    schema:
+      type: string
+      empty: false

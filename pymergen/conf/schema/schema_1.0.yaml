@@ -1,0 +1,138 @@
+version:
+  type: string
+plans:
+  type: list
+  required: true
+  empty: false
+  schema:
+    type: dict
+    schema:
+      name:
+        type: string
+        required: true
+        empty: false
+      pre:
+        type: list
+        empty: false
+        schema: include:includes/command.yaml
+      post:
+        type: list
+        empty: false
+        schema: include:includes/command.yaml
+      cgroups:
+        type: list
+        empty: false
+        schema: include:includes/controller/cgroup.yaml
+      collectors:
+        type: list
+        schema:
+          anyof:
+            - placeholder
+      config:
+        type: dict
+        empty: false
+        schema:
+          replication:
+            type: integer
+            empty: false
+          iterate:
+            type: string
+            empty: false
+            allowed:
+              - product
+              - zip
+          iters:
+            type: dict
+            empty: false
+          params:
+            type: dict
+            empty: false
+      suites:
+        type: list
+        required: true
+        empty: false
+        schema:
+          type: dict
+          empty: false
+          schema:
+            name:
+              type: string
+              required: true
+              empty: false
+            pre:
+              type: list
+              empty: false
+              schema: include:includes/command.yaml
+            post:
+              type: list
+              empty: false
+              schema: include:includes/command.yaml
+            config:
+              type: dict
+              empty: false
+              schema:
+                replication:
+                  type: integer
+                  empty: false
+                concurrency:
+                  type: boolean
+                  empty: false
+                iterate:
+                  type: string
+                  empty: false
+                  allowed:
+                    - product
+                    - zip
+                iters:
+                  type: dict
+                  empty: false
+                params:
+                  type: dict
+                  empty: false
+            cases:
+              type: list
+              required: true
+              empty: false
+              schema:
+                type: dict
+                empty: false
+                schema:
+                  name:
+                    type: string
+                    required: true
+                    empty: false
+                  pre:
+                    type: list
+                    empty: false
+                    schema: include:includes/command.yaml
+                  post:
+                    type: list
+                    empty: false
+                    schema: include:includes/command.yaml
+                  config:
+                    type: dict
+                    empty: false
+                    schema:
+                      replication:
+                        type: integer
+                        empty: false
+                      parallelism:
+                        type: integer
+                        empty: false
+                      iterate:
+                        type: string
+                        empty: false
+                        allowed:
+                          - product
+                          - zip
+                      iters:
+                        type: dict
+                        empty: false
+                      params:
+                        type: dict
+                        empty: false
+                  commands:
+                    type: list
+                    required: true
+                    empty: false
+                    schema: include:includes/command.yaml

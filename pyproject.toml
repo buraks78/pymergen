@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=75.8.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pymergen"
+dynamic = ["version"]
+requires-python = ">= 3.12"
+dependencies = [
+    "pyyaml",
+    "cerberus",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "Operating System :: POSIX :: Linux",
+    "Topic :: System :: Systems Administration",
+]
+authors = [
+  { name = "Burak Seydioglu", email = "buraks78@gmail.com" },
+]
+description = "PyMergen is a configuration-driven test automation tool for Linux."
+keywords = ["test", "benchmark", "collect", "perf", "stat", "profile", "trace", "cgroup", "linux"]
+readme = "README.md"
+license = "GPL-3.0-only"
+license-files = ["LICENSE"]
+
+[project.scripts]
+
+[project.urls]
+Source = "https://github.com/buraks78/pymergen"
+Issues = "https://github.com/buraks78/pymergen/issues"
+
+[tool.setuptools.dynamic]
+version = { attr = "pymergen.__version__" }
+
+[tool.setuptools.packages.find]
+include = ["pymergen*"]
+
+[tool.setuptools.package-data]
+pymergen = ["**/*.yaml"]
+
+[tool.pytest.ini_options]
+addopts = "-v --cov=pymergen --cov-report=term --cov-report=html"
+testpaths = [
+    "tests",
+]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"

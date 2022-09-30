@@ -1,0 +1,134 @@
+version: "1.0"
+plans:
+  - name: plan1
+    config:
+      replication: 2
+      iters:
+        third:
+          - burak
+    pre:
+      - name: "plan1_pre1"
+        cmd: "echo 'plan1 pre #1'"
+      - name: "plan1_pre2"
+        cmd: "echo 'plan1 pre #2'"
+    post:
+      - name: "plan1_post1"
+        cmd: "echo 'plan1 post #1'"
+      - name: "plan1_post2"
+        cmd: "echo 'plan1 post #2'"
+    cgroups:
+      - name: test
+        become_cmd: sudo
+        controllers:
+          - name: cpuset
+            limits:
+              - key: cpus
+                value: "1-2"
+              - key: mems
+                value: 0
+          - name: cpu
+          - name: memory
+            limits:
+              - key: min
+                value: 1
+              - key: max
+                value: 100000000
+          - name: io
+    collectors:
+      - name: test
+        engine: cgroup
+        ramp: 1
+        interval: 1
+      - name: trace
+        engine: command
+        ramp: 1
+        cmd: "perf trace -e openat"
+        become_cmd: sudo
+        pipe_stderr: "{m:context:run_path}/collector.trace_openat.out"
+      - name: stats
+        engine: perf_stat
+        become_cmd: sudo
+        ramp: 5
+        custom:
+          - "--custom-flag"
+        events:
+          - name: cycles
+            cgroup: test
+          - name: page-faults
+            cgroup: test
+          - name: cycles
+          - name: page-faults
+      - name: profile
+        engine: perf_profile
+        become_cmd: sudo
+        ramp: 5
+        custom:
+          - "--custom-flag"
+        events:
+          - name: cycles
+            cgroup: test
+          - name: page-faults
+            cgroup: test
+          - name: cycles
+          - name: page-faults
+    suites:
+      - name: suite1
+        config:
+          replication: 2
+          concurrency: false
+        pre:
+          - name: "suite1_pre1"
+            cmd: "echo 'suite1 pre #1'"
+          - name: "suite1_pre2"
+            cmd: "echo 'suite1 pre #2'"
+        post:
+          - name: "suite1_post1"
+            cmd: "echo 'suite1 post #1'"
+          - name: "suite1_post2"
+            cmd: "echo 'suite1 post #2'"
+        cases:
+          - name: case1
+            config:
+              replication: 2
+              parallelism: 2
+            pre:
+              - name: "case1_pre1"
+                cmd: "echo 'case1 pre {m:context:pid}'"
+              - name: "case1_pre2"
+                cmd: "echo 'case1 pre #2'"
+            post:
+              - name: "case1_post1"
+                cmd: "echo 'case1 post #1'"
+              - name: "case1_post2"
+                cmd: "echo 'case1 post #2'"
+            commands:
+              - name: "case1_dd"
+                cmd: "dd if=/dev/urandom iflag=fullblock of={m:context:run_path}/run.{m:entity:command}.out bs=1M count=1000 oflag=direct"
+                become_cmd: sudo
+                cgroups:
+                  - test
+          - name: case2
+            config:
+              replication: 2
+              parallelism: 1
+              iterate: product
+              iters:
+                first:
+                  - A
+                  - B
+                second:
+                  - a
+                  - b
+            pre:
+              - name: "case2_pre1"
+                cmd: "echo 'case2 pre #1'"
+              - name: "case2_pre2"
+                cmd: "echo 'case2 pre #2'"
+            post:
+              - name: "case2_post1"
+                cmd: "echo 'case2 post #1'"
+              - name: "case2_post2"
+                cmd: "echo 'case2 post #2'"
+            commands:
+              - name: "case2_dd"
+                cmd: "dd if=/dev/urandom iflag=fullblock of={m:context:run_path}/run.{m:entity:command}_{m:iter:first}{m:iter:second}.out bs=1M count=1000 oflag=direct"

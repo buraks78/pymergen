@@ -1,0 +1,3 @@
+cmd: "echo 'included command'"
+shell: true
+debug_stdout: true

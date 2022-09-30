@@ -1,0 +1,36 @@
+type: dict
+empty: false
+schema:
+  name:
+    type: string
+    required: true
+    empty: false
+  engine:
+    type: string
+    required: true
+    empty: false
+    allowed:
+      - command
+  cmd:
+    type: string
+    required: true
+    empty: false
+  become_cmd:
+    type: string
+    empty: false
+  shell:
+    type: boolean
+    empty: false
+  shell_executable:
+    type: string
+    empty: false
+  pipe_stdout:
+    type: string
+    empty: false
+  pipe_stderr:
+    type: string
+    empty: false
+  ramp:
+    type: integer
+    required: true
+    empty: false

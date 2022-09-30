@@ -1,0 +1,7 @@
+name: suite
+config:
+  replication: 2
+  concurrency: false
+cases:
+  - include:case1.yaml
+  - include:case2.yaml

@@ -1,0 +1,22 @@
+version: "1.0"
+plans:
+  - name: test_plan
+    config:
+      replication: 2
+      params:
+        key_a: value_a
+    suites:
+      - name: test_suite
+        config:
+          replication: 2
+          concurrency: true
+          params:
+            key_b: value_b
+        cases:
+          - name: test_case
+            config:
+              replication: 1
+              parallelism: 1
+            commands:
+              - cmd: "echo 'test'"
+                shell: true

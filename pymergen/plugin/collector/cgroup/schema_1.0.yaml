@@ -1,0 +1,21 @@
+type: dict
+empty: false
+schema:
+  name:
+    type: string
+    required: true
+    empty: false
+  engine:
+    type: string
+    required: true
+    empty: false
+    allowed:
+      - cgroup
+  ramp:
+    type: integer
+    required: true
+    empty: false
+  interval:
+    type: integer
+    required: true
+    empty: false

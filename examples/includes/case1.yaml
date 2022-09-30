@@ -1,0 +1,12 @@
+name: case1
+config:
+  replication: 2
+  parallelism: 2
+commands:
+  - name: "case1_cmd"
+    cmd: "echo {1..9} | tee"
+    shell: true
+    pipe_stdout: "{m:context:run_path}/{m:entity:case}.stdout"
+    pipe_stderr: "{m:context:run_path}/{m:entity:case}.stderr"
+    debug_stdout: false
+    debug_stderr: false
